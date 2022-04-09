@@ -30,7 +30,6 @@ CASS:= venit_brut/10;
 salariu_brut_impozitabil:=venit_brut-CAS-CASS;
 impozit:=salariu_brut_impozitabil/10;
 venit_net:=salariu_brut_impozitabil-impozit;
-
 dbms_output.put_line('CNP '||cnp);
 dbms_output.put_line('Nume '||nume);
 dbms_output.put_line('Functie '||functie);
@@ -64,7 +63,7 @@ INSERT INTO Produse VALUES(3, ’Paine’, 10,0);
 
 Create or Replace function Stoc(ID char)
 return varchar is
- stoc numeric;
+stoc numeric;
 begin
 select Cantitate into Stoc from Produse Where ID=id_produs;
 if(stoc>=5) then 
