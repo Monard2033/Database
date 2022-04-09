@@ -20,7 +20,7 @@ INSERT INTO studenti VALUES('222222', 'Vlad Simona','N', 'F', 1,2);
 INSERT INTO studenti VALUES('333333', 'Lung Ionut', 'C', 'M', 2,1); 
 INSERT INTO discipline VALUES(1, 'Programare WEB'); 
 INSERT INTO discipline VALUES(2, 'Baze de date'); 
-INSERT INTO discipline VALUES(3, 'Retele neuronale'); 
+INSERT INTO discipline VALUES(3, 'Retele neuronale');
 INSERT INTO discipline VALUES(4, 'Java'); 
 INSERT INTO note VALUES('111111',8, 1); 
 INSERT INTO note VALUES('111111',10, 2); 
