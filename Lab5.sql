@@ -27,7 +27,6 @@ INSERT INTO note VALUES('111111',10, 2);
 INSERT INTO note VALUES('222222',4, 2); 
 INSERT INTO note VALUES('333333',7, 3); 
 INSERT INTO note VALUES('333333',8, 4);
-
 --a
 select * from studenti where Stare_civila='N';
 --b
@@ -40,16 +39,13 @@ from studenti A , discipline B,note C
 where A.Marca=C.Marca and B.Cod_disciplina=C.Cod_disciplina
 group by C.Marca,A.Nume,A.An,A.Grupa,C.Nota;
 select* from Medii;
-
 --d
 Create or Replace view Note_studenti(Marca,Nume,An,Grupa,Denumire_disciplina,Nota)
 as select A.Marca,A.Nume,A.An,A.Grupa,B.Denumire_disciplina,C.Nota
 from studenti A,discipline B,note C
 Where A.Marca=C.Marca and B.Cod_disciplina=C.Cod_disciplina;
 select* from Note_studenti order by Marca;
-
 select* from Note_studenti where Denumire_disciplina like 'Baze de%';
-
 select B.Marca,A.Nume,A.An,A.Grupa,B.Medie from Note_studenti A
 where A.Marca=B.Marca and C.Medie>7.5;
 --e
@@ -58,7 +54,6 @@ as select C.Marca,A.Nume,A.An,A.Grupa,Avg(Nota)
 from studenti A,note C
 where A.Marca=C.Marca
 group by C.Marca,A.Nume,A.An,A.Grupa;
-
 
 select A.Marca,A.Nume,A.An,A.Grupa,A.Medie from Medii_restantieri A
  having 
