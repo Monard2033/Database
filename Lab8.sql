@@ -1,43 +1,46 @@
+set linesize 350;
+drop table Evidenta_angajati; 
 CREATE TABLE Evidenta_angajati( 
 cnp char(13) PRIMARY KEY, 
 nume varchar(20), 
-data_nasterii date); 
-
-ALTER session SET nls_date_format='DD/MM/YYYY';
+data_nasterii date);
 
 --1
-
-create or replace trigger trig_data
+alter session set nls_date_format='dd-mm-yyyy';
+create or replace trigger trigger_data
 before insert on Evidenta_angajati
-for each row 
+for each row
 declare
-data_nas char(6);
+data_nas char(2);
 zi integer;
 luna integer;
 an integer;
 pref integer;
-
 er exception;
 begin
 pref:=substr(:new.cnp,1,1);
 an:=substr(:new.cnp,2,2);
 luna:=substr(:new.cnp,4,2);
 zi:=substr(:new.cnp,6,2);
-if pref =1 or pref=2 then 
-an:=1900+an;
+if pref=1 or pref=2 then an:=1900+an;
 else
-if pref=5 or pref=6 then 
-an:=2000+an;
+if pref=5 or pref=6 then an:=2000+an;
 else
 raise er;
 end if;
 end if;
-:new.data_nasterii:=zi||'.'||luna||'.'||an;
+:new.data_nasterii:=zi||'/'||luna||'/'||an;
+exception
+when er then
+raise_application_error(-20000,'Eroare');
 end;
 /
+INSERT INTO Evidenta_angajati VALUES(’2830823350077’, ’vali’, NULL);
+INSERT INTO Evidenta_angajati VALUES(’1990307410084’, ’Mihail’, NULL);
+INSERT INTO Evidenta_angajati VALUES(’5990307410084’, ’Smecheru’, NULL);
+INSERT INTO Evidenta_angajati VALUES(’7990307410084’, ’Mihai’, NULL);
+SELECT * FROM Evidenta_angajati;
 
-INSERT INTO Evidenta_angajati VALUES('2830823350077', 'vali', NULL); 
-SELECT * FROM Evidenta_angajati; 
 
 --2a
 
