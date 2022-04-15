@@ -61,14 +61,6 @@ INSERT INTO produse VALUES (3, ’iaurt’, 6, 7);
 INSERT INTO produse VALUES (4, ’kefir’, 7, 7);
 
 --2b  
-
-INSERT INTO vanzari VALUES (1,3,NULL); 
-INSERT INTO vanzari VALUES (2,4,NULL); 
-
-SELECT * FROM produse; 
-SELECT * FROM vanzari; 
-
-
 create or replace trigger trig_vanzari
 before insert on vanzari 
 for each row declare 
@@ -87,13 +79,10 @@ else
 	update produse set stoc=stoc-:new.cantitate where
 	id_produs:=:new.id_produs;
 end if;
-
 exception when error then
 raise_application_error(-20000,'Stoc insuficient!');
 end;
 /
-
-
 
 INSERT INTO vanzari VALUES (1,3,NULL); 
 INSERT INTO vanzari VALUES (2,4,NULL); 
@@ -114,9 +103,6 @@ id_user integer NOT NULL REFERENCES useri(id_user),
 text_reminder varchar(200), 
 data_reminder date, 
 status varchar(10));
-
-
-
 
 INSERT INTO useri VALUES(1, 'adi', 'adi@yahoo.com', '224477', '333555'); 
 SELECT * FROM useri; 
