@@ -5,7 +5,7 @@ set nls_date_format='dd-mm-yyyy';
 
 create table curs_valutar (
 Data DATE PRIMARY KEY,
-Rata NUMBER(1,2) NOT NULL CHECK(Rata>=1 and Rata<=4)
+Rata NUMBER(1,2) NOT NULL CHECK(Rata>=1.00 and Rata<=4.00)
 );
 
 create table parteneri (
