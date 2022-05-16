@@ -90,3 +90,61 @@ as SELECT B.Nume,B.CUI,C.Data_tranzactiei,'Intrare' as Tip,C.Valuta,C.Lei
 from parteneri B, tranzactii C
 where B.CUI=C.CUI and Valuta>=0
 group by B.Nume,C.Data_tranzactiei;
+
+--7
+insert into tranzactii values('05-09-2022','182341',300,NULL);
+
+create or replace trigger T2
+before insert on tranzactii
+for each row
+declare
+a numeric(6,2);
+begin
+select Rata into a from curs_valutar where Data =:new.Data_tranzactiei;
+if a <> 0 then
+   :new.Lei:=:new.Valuta*a; 
+else
+   raise_application_error(-20000,'Nu s-a efectuat inserarea');
+end if;
+end;
+/
+insert into tranzactii values('05-09-2022','182341',450,NULL);
+select * from tranzactii;
+
+--8 
+
+create or replace function F8(cui char)
+return numeric as x numeric;
+begin
+select sum(abs(Valuta)) into x from tranzactii where CUI=cui;
+return x;
+end;
+/
+select F8('154706') from dual;
+
+--9
+select CUI,F9((select extract( year from Data_tranzactiei) as year from tranzactii),CUI) from tranzactii;
+create or replace function F9(an numeric,c char)
+return numeric as a numeric(8);
+begin
+select count(sumavaluta) into a from tranzactii where sumavaluta>=0 and c=CUI and 
+(select extract( year from Data_tranzactiei) as year from tranzactii where c=CUI)=an;
+return a;
+end;
+/
+
+--10
+create or replace function Part(cui char)
+return numeric as
+a numeric(8);
+b numeric(8);
+c numeric(8);
+begin
+select sum(sumavaluta) into b from tranzactii where Valuta<0 and cui=CUI;
+select sum(sumavaluta) into c from tranzactii where Valuta>0 and cui=CUI;
+a:=(abs(b)*100)/(abs(b)+c);
+return a;
+end;
+/
+select Nume,CUI,count(CUI) as nr_tranz,Part(CUI) as Rata from tranzactii
+group by Nume,CUI having count(CUI)=(select max(count(CUI)) from tranzactii group by Nume);
