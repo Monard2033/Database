@@ -5,18 +5,18 @@ set nls_date_format='dd-mm-yyyy';
 
 create table curs_valutar (
 Data DATE PRIMARY KEY,
-Rata NUMBER(1,2) NOT NULL CHECK(Rata>=1.00 and Rata<=4.00)
+Rata NUMBER(1,1) NOT NULL CHECK(Rata>=1.00 and Rata<=4.00)
 );
 
 create table parteneri (
 Nume VARCHAR(16) PRIMARY KEY NOT NULL CHECK(Nume<=10),
-CUI VARCHAR(6) NOT NULL,
+CUI VARCHAR(6) UNIQUE NOT NULL,
 Adresa VARCHAR(20) NOT NULL
 );
 
 create table tranzactii(
 Data_tranzactiei DATE PRIMARY KEY REFERENCES curs_valutar(Data),
-CUI VARCHAR(6) FOREIGN KEY REFERENCES parteneri(CUI) ON DELETE CASCADE,
+CUI VARCHAR(6) REFERENCES parteneri(CUI) ON DELETE CASCADE,
 Valuta NUMBER(5,2),
 Lei NUMBER(5,2) 
 );
@@ -26,7 +26,7 @@ Data DATE UNIQUE REFERENCES curs_valutar(Data) ON DELETE CASCADE,
 Sold_initial NUMBER(7,2) DEFAULT '0',
 Total_intrari INTEGER,
 Total_iesiri INTEGER,
-Sold_final NUMBER(7,3) NOT NULL,
+Sold_final NUMBER(7,3) NOT NULL
 );
 --3
 INSERT INTO curs_valutar VALUES ('03-09-2022',2.3);
