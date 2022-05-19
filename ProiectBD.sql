@@ -9,7 +9,7 @@ Rata NUMBER(1,2) NOT NULL CHECK(Rata>=1.00 and Rata<=4.00)
 );
 
 create table parteneri (
-Nume VARCHAR PRIMARY KEY NOT NULL CHECK(Nume<=10),
+Nume VARCHAR(16) PRIMARY KEY NOT NULL CHECK(Nume<=10),
 CUI VARCHAR(6) NOT NULL,
 Adresa VARCHAR(20) NOT NULL
 );
