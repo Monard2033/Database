@@ -1,7 +1,7 @@
 set linesize 300;
 set autocommit on;
 set serveroutput on;
-alter table set nls_date_format='dd-mm-yyyy';
+alter session set nls_date_format='dd-mm-yyyy';
 
 create table curs_valutar (
 Data DATE PRIMARY KEY,
@@ -82,15 +82,9 @@ end;
 /
 execute Raport(154706);
 --6
-Create or Replace view Raport AS
-SELECT B.Nume,C.CUI,C.Data_tranzactiei,'Intrare' as Tip
-from parteneri B , tranzactii C where B.CUI=C.CUI and Valuta<0 
-union
-SELECT B.Nume,C.CUI,C.Data_tranzactiei,'Iesire' as Tip
-from parteneri B , tranzactii C where B.CUI=C.CUI and Valuta>=0 
-group by B.Nume,C.Data_tranzactiei
-order by Nume,Data_tranzactiei;
-
+Create or Replace view Raport as
+select p.Nume as Nume , t.CUI, t.Data_tranzactiei
+from parteneri p, tranzactii t;
 --7
 insert into tranzactii values('05-09-2022','182341',300,NULL);
 
@@ -123,15 +117,6 @@ end;
 select F8('154706') from dual;
 
 --9
-select CUI,F9((select extract( year from Data_tranzactiei) as year from tranzactii),CUI) from tranzactii;
-create or replace function F9(an numeric,c char)
-return numeric as a numeric(8);
-begin
-select count(sumavaluta) into a from tranzactii where sumavaluta>=0 and c=CUI and 
-(select extract( year from Data_tranzactiei) as year from tranzactii where c=CUI)=an;
-return a;
-end;
-/
 
 --10
 create or replace function Part(cui char)
@@ -140,11 +125,12 @@ a numeric(8);
 b numeric(8);
 c numeric(8);
 begin
-select sum(sumavaluta) into b from tranzactii where Valuta<0 and cui=CUI;
-select sum(sumavaluta) into c from tranzactii where Valuta>0 and cui=CUI;
+select sum(Valuta) into b from tranzactii where Valuta<0 and cui=CUI;
+select sum(Valuta) into c from tranzactii where Valuta>0 and cui=CUI;
 a:=(abs(b)*100)/(abs(b)+c);
 return a;
 end;
 /
-select Nume,CUI,count(CUI) as nr_tranz,Part(CUI) as Rata from tranzactii
-group by Nume,CUI having count(CUI)=(select max(count(CUI)) from tranzactii group by Nume);
+select distinct Nume from parteneri
+select CUI,count(CUI) as Numar_Tranzactii,Part(CUI) as Rata from tranzactii , parteneri
+group by CUI having count(CUI)=(select max(count(CUI)) from tranzactii group by CUI);
