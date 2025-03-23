@@ -1,0 +1,46 @@
+-- Insert data into the projects table
+INSERT INTO public.projects (project_id, name, description, status, start_date, end_date) VALUES
+(1, 'Java/Angular', 'Creare unui site de monitorizare a studentilor practicanti in perioada verii', 'In desfasurare', '2023-06-01 00:00:00', '2023-07-25 00:00:00');
+
+-- Insert data into the sessions table
+INSERT INTO public.sessions (id, student_name, team_name, project_name, attendance, grade, date, student_id, session_id) VALUES
+(1, 'Opinca Mihail', 'MAD FM', 'Java/Angular', '1/3', 7, '2023-06-13 16:00:00', 1, 1),
+(2, 'Jizdan Ianec', 'MAD FM', 'Java/Angular', '1/3', 2, '2023-06-03 16:00:00', 2, 2),
+(3, 'Iachim Vlad', 'MAD FM', 'Java/Angular', '1/3', 6, '2023-06-03 16:00:00', 3, 1),
+(5, 'Mihail Opinca', 'MAD FM', 'Java/Angular', '1/3', 1, '2023-06-03 16:00:00', 8, 1);
+
+-- Insert data into the tasks table
+INSERT INTO public.tasks (id, start_time, task_name, end_time, description, project_name) VALUES
+(5, '2024-06-22 08:00:00', 'TASK S2', '2024-06-30 23:59:00', 'Crearea structurei API pentru utilizator: citirea datelor unui student , citirea datelor a tuturor studentilor , adaugarea unui student , stergerea unui student , cautarea unui student.', 'Java/Angular'),
+(1, '2024-06-15 08:00:00', 'TASK S1', '2024-12-30 23:59:00', 'Crearea tabelelor pentru: utilizator, proiecte, sesiuni, echipe, intalniri (zoom), mesagerie. Precum si relatiile de referinta intre coloane', 'Java/Angular');
+
+-- Insert data into the users table
+INSERT INTO public.users (id, name, email, phone, role, team, project_name, is_online) VALUES
+(2, 'Jizdan Ianec', 'ianec.jizdan@student.upt.ro', '0720867243', 'student', 4, 'Java/Angular', 'true'),
+(3, 'Iachim Vlad', 'vlad.iachim@student.upt.ro', '0243567431', 'student', 4, 'Java/Angular', 't'),
+(8, 'Mihail Opinca', 'mihail.opinca@student.upt.ro', '0123456789', 'student', 4, 'Java/Angular', 't'),
+(10, 'test', 'test@test.com', NULL, 'test', 4, 'Java/Angular', 't'),
+(1, 'Opinca Mihail', 'opinca2017@gmail.com', '0770978600', 'admin', 4, 'Java/Angular', 't');
+
+-- Insert data into the comments table
+INSERT INTO public.comments (id, user_name, content, created_at, updated_at, task_name) VALUES
+(17, 'Opinca Mihail', 'Finalizat.', '2024-06-05 11:03:31.67', '2024-06-05 11:03:31.67', 'TASK S1'),
+(18, 'Opinca Mihail', 'HeHE', '2024-06-05 13:57:21.221', '2024-06-05 13:57:21.221', 'TASK S1'),
+(19, 'Opinca Mihail', 'Yep', '2024-06-18 02:09:58.914', '2024-06-18 02:09:58.914', 'TASK S1'),
+(20, 'Opinca Mihail', 'Hello', '2024-06-18 02:58:54.474', '2024-06-18 02:58:54.474', 'TASK S1'),
+(22, 'Opinca Mihail', '......', '2024-06-18 06:02:50.044', '2024-06-18 06:02:50.044', 'TASK S1'),
+(24, 'Jizdan Ianec', 'Hello!', '2024-06-22 20:00:44.229', '2024-06-22 20:00:44.229', 'TASK S1'),
+(26, 'Opinca Mihail', 'Helo', '2024-06-25 19:01:52.943', '2024-06-25 19:01:52.943', 'TASK S2'),
+(28, 'Opinca Mihail', '!', '2024-06-25 19:09:23.194', '2024-06-25 19:09:23.194', 'TASK S2');
+
+-- Insert data into the meetings table
+INSERT INTO public.meetings (id, name, meet_code, meeting_date, zoom_link) VALUES
+(1, 'Sesiunea 1', 'S03623', '2023-06-03 16:00:00', NULL),
+(2, 'Sesiunea 2', 'S10623', '2023-06-13 16:00:00', NULL),
+(5, 'Sesiunea 3', 'S10624', '2023-06-20 16:00:00', NULL),
+(7, 'Sesiunea 4', 'S16624', '2024-06-26 16:00:00', 'https://upt-ro.zoom.us/j/97857889815?'),
+(9, 'Sesiunea 5', 'S20624', '2001-04-30 21:00:00', 'https://upt-ro.zoom.us/j/97857889815?');
+
+-- Insert data into the teams table
+INSERT INTO public.teams (id, name, team_id) VALUES
+(1, 'MAD FM', 4);
