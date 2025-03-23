@@ -1,0 +1,94 @@
+-- Create teams table (before users and sessions tables)
+CREATE TABLE public.teams (
+    id bigint NOT NULL,
+    name text NOT NULL,
+    team_id smallint
+);
+
+-- Create projects table (before tasks and users tables)
+CREATE TABLE public.projects (
+    project_id bigint NOT NULL,
+    name text NOT NULL,
+    description text,
+    status text,
+    start_date timestamp without time zone,
+    end_date timestamp without time zone
+);
+
+-- Create tasks table (before users and comments tables)
+CREATE TABLE public.tasks (
+    id bigint NOT NULL,
+    start_time timestamp without time zone NOT NULL,
+    task_name text,
+    end_time timestamp without time zone,
+    description text,
+    project_name text
+);
+
+-- Create users table (after teams and projects, as it references both)
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    name text NOT NULL,
+    email text,
+    phone text,
+    role text,
+    team integer,
+    project_name text,
+    is_online boolean
+);
+
+-- Create meetings table (before sessions table, as sessions reference meetings)
+CREATE TABLE meetings (
+    id BIGINT ,
+    name TEXT NOT NULL,
+    meet_code TEXT NOT NULL,
+    meeting_date timestamp,
+    zoom_link text
+);
+
+-- Create sessions table (after meetings and users, as it references both)
+CREATE TABLE public.sessions (
+    id bigint NOT NULL,
+    student_name text NOT NULL,
+    team_name text NOT NULL,
+    project_name text NOT NULL,
+    attendance text,
+    grade real,
+    date timestamp without time zone,
+    student_id bigint,
+    session_id bigint
+);
+
+-- Create user_themes table (no dependencies)
+CREATE TABLE public.user_themes (
+    id bigint NOT NULL,
+    user_name text NOT NULL,
+    theme text
+);
+
+-- Create chats table (no dependencies)
+CREATE TABLE chats (
+    id BIGINT 
+);
+
+-- Create messages table (after chats and users, as it references both)
+
+CREATE TABLE public.messages (
+    id bigint NOT NULL,
+    chat_id bigint NOT NULL,
+    author_name text,
+    content character varying,
+    created_at timestamp without time zone,
+    seen boolean
+);
+
+
+-- Create comments table (after tasks and users, as it references both)
+CREATE TABLE public.comments (
+    id bigint NOT NULL,
+    user_name text,
+    content text DEFAULT ''::text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    task_name text
+);
